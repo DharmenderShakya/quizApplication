@@ -55,8 +55,8 @@ public class QuizeService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime endDate = LocalDateTime.parse(qui.getEndDate(), formatter);
         LocalDateTime startDate = LocalDateTime.parse(qui.getStartDate(), formatter);
-		
-            if ((now.isEqual(startDate)|now.isAfter(startDate)) && !now.equals(endDate)|now.isAfter(endDate)) {
+        
+            if ((now.isEqual(startDate)|now.isAfter(startDate)) && !now.equals(endDate)|now.isBefore(endDate)) {
             	qui.setStatus(QuizStatus.ACTIVE);
             	 activatedQuiz=qui;
             }else {
@@ -79,11 +79,11 @@ public class QuizeService {
 			if(optionalQuiz.isPresent()) {
 				Quiz quiz = optionalQuiz.get();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		        LocalDateTime userDateTime = LocalDateTime.parse(quiz.getEndDate(), formatter);
+		        LocalDateTime endDate = LocalDateTime.parse(quiz.getEndDate(), formatter);
 
 //				 LocalDateTime endDateTime = quiz.getEndDate().plusMinutes(5);
 				 
-				 if(LocalDateTime.now().isAfter(userDateTime.plusMinutes(5))) {
+				 if(LocalDateTime.now().isAfter(endDate.plusMinutes(5))) {
 					 
 //					 System.out.println("hello this is your result ---------------------------------------"+quiz.getRightAnswer());
 					  result= quiz.getRightAnswer();
